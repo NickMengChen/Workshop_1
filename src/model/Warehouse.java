@@ -14,15 +14,29 @@ public class Warehouse {
         return Materials;
     }
 
-    public void setMaterials(Map<Material, Integer> materials) {
-        //Materials = materials;
-    }
-
     public void addMerials(Material material, int stock)
     {
+        if (!checkIsExist(material))
+        {
+            Materials.put(material, stock);
+            return;
+        }
 
+
+        Materials.replace(material, Materials.get(material)+stock);
 
     }
+
+    public boolean decreaseMaterials(Material material, int number)
+    {
+        if (Materials.get(material) - number >= 0){
+            Materials.replace(material, Materials.get(material)-number);
+            return true;
+        }
+        return false;
+
+    }
+
 
     public boolean checkIsExist(Material material){
 
@@ -73,15 +87,35 @@ public class Warehouse {
         return false;
     }
 
-    public void PrintStorgeReport() throws Exception{
-        //System.out.println(Materials.toString());
-        //items.forEach((k,v)->System.out.println("Item : " + k + " Count : " + v));
+    public void PrintStorgeReport(){
+
+        Iterator<Map.Entry<Material, Integer>>
+                iterator = Materials.entrySet().iterator();
+        // Iterate over the HashMap
+        while (iterator.hasNext()) {
+
+            // Get the entry at this iteration
+            Map.Entry<Material, Integer>
+                    entry
+                    = iterator.next();
+            System.out.print(entry.getKey().getName() + " ");
+            System.out.println(entry.getValue());
+        }
+
     }
 
-    public void CheckStroge() throws Exception{
-        System.out.println(Materials.toString());
+    public void CheckStroge(){
+        Iterator<Map.Entry<Material, Integer>>
+                iterator = Materials.entrySet().iterator();
+        // Iterate over the HashMap
+        while (iterator.hasNext()) {
 
-
+            // Get the entry at this iteration
+            Map.Entry<Material, Integer>
+                    entry
+                    = iterator.next();
+            System.out.println(entry.getKey().getName() + entry.getKey().getPrice() + entry.getKey().getType());
+        }
     }
 
 
